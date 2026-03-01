@@ -53,6 +53,66 @@
     </div>
   </div>
 
+  <!-- INVITATION OVERLAY CARD -->
+  <div id="invitation-overlay"
+    class="fixed inset-0 z-[9990] flex items-center justify-center overflow-hidden transition-opacity duration-1000 ease-in-out">
+
+    <!-- Background Content -->
+    <div class="absolute inset-0 z-0">
+      <img src="invitation_bg.png" alt="Invitation Background" class="w-full h-full object-cover" />
+    </div>
+
+    <!-- Center Card Text Content -->
+    <div
+      class="relative z-10 flex flex-col items-center justify-center text-center px-4 mt-16 md:mt-32 transition-opacity duration-700 ease-in-out"
+      id="invitation-content">
+      <img src="vinayaka_logo.png" alt="Om Ganeshay Namah" class="vinayaka-logo w-20 md:w-28 mb-4" />
+
+      <h2 class="font-serif text-5xl md:text-7xl mb-4" style="color: #791e35;">Wedding</h2>
+      <p class="font-garamond italic text-2xl md:text-3xl tracking-widest mb-6" style="color: #791e35;">Invitation</p>
+
+      <div class="flex items-center justify-center gap-3 my-4">
+        <div class="h-px w-16 md:w-24 bg-gold/80"></div>
+        <span class="text-gold text-xl">✦</span>
+        <div class="h-px w-16 md:w-24 bg-gold/80"></div>
+      </div>
+
+      <h1 class="font-serif text-4xl md:text-6xl mt-6 italic" style="color: #791e35;">Ganesh &amp; Harika</h1>
+
+      <div class="mt-8">
+        <div class="flex items-center justify-center text-gold text-3xl">
+          <span class="mr-2">❈</span><span class="text-2xl">✤</span><span class="ml-2">❈</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Envelope Flaps -->
+    <!-- Top Flap -->
+    <div id="envelope-flap-top"
+      class="absolute top-0 left-0 w-full z-20 transition-transform duration-1000 ease-in-out origin-top"
+      style="height: 50vh;">
+      <img src="envelope_flap_top.png" alt="Top Flap"
+        class="w-full h-full object-cover object-bottom shadow-[0_10px_30px_rgba(0,0,0,0.5)]" />
+    </div>
+
+    <!-- Bottom Flap -->
+    <div id="envelope-flap-bottom"
+      class="absolute bottom-0 left-0 w-full z-20 transition-transform duration-1000 ease-in-out origin-bottom"
+      style="height: 50vh;">
+      <img src="envelope_flap_bottom.png" alt="Bottom Flap"
+        class="w-full h-full object-cover object-top shadow-[0_-10px_30px_rgba(0,0,0,0.5)]" />
+    </div>
+
+    <!-- Center Wax Seal Button -->
+    <div class="absolute z-30 pulse-animation"
+      style="top:50%; left:50%; transform:translate(-50%,-50%); width:10rem; height:10rem;">
+      <button id="open-invitation-btn" class="w-full h-full focus:outline-none" aria-label="Open Wedding Invitation">
+        <img src="wax_seal.png" alt="Open Invitation" class="w-full h-full" />
+      </button>
+    </div>
+
+  </div>
+
   <!-- FLOATING PETALS -->
   <div id="petals-container" class="fixed inset-0 pointer-events-none z-10"></div>
 
@@ -60,7 +120,8 @@
   <nav class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b border-gold/30"
     style="background:rgba(10,13,46,0.88);">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
-      <span class="text-gold font-serif text-xl">G ❤️ H</span>
+      <img src="gh_logo.png" alt="Ganesh & Harika"
+        class="h-10 w-auto md:h-12 hover:scale-105 transition-transform duration-300" />
       <div class="hidden md:flex gap-6 text-gold-light font-sans text-sm tracking-widest">
         <a href="#events" class="hover:text-gold transition-colors">Events</a>
         <a href="#story" class="hover:text-gold transition-colors">Our Story</a>
@@ -85,12 +146,16 @@
     <div class="absolute inset-0 hero-shimmer pointer-events-none"></div>
 
     <div class="relative z-10 text-center px-4 max-w-4xl mx-auto pt-28 pb-16 w-full">
+      <!-- Vinayaka Logo -->
+      <div class="fade-in-up opacity-0" style="animation-delay:0.1s">
+        <img src="vinayaka_logo.png" alt="Lord Vinayaka" class="vinayaka-logo w-16 md:w-24 mx-auto mb-1" />
+      </div>
       <!-- Om Symbol -->
-      <div class="fade-in-up opacity-0" style="animation-delay:0.2s">
-        <div class="text-gold text-6xl md:text-8xl mb-2 drop-shadow-lg glow-text">ॐ</div>
+      <div class="fade-in-up opacity-0" style="animation-delay:0.3s">
+        <div class="text-gold text-5xl md:text-7xl mb-2 drop-shadow-lg glow-text leading-none">ॐ</div>
       </div>
       <!-- Subtitle -->
-      <p class="fade-in-up opacity-0 text-gold-light font-garamond italic text-lg md:text-2xl tracking-widest mb-2"
+      <p class="fade-in-up opacity-0 text-gold-light font-garamond italic text-base md:text-xl tracking-widest mb-2"
         style="animation-delay:0.5s">
         With Divine Blessings of Lord Mallikarjuna
       </p>
@@ -307,7 +372,7 @@
       </div>
 
       <!-- Photo placeholders -->
-      <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-14">
+      <!-- <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-14">
         <div
           class="photo-frame aspect-square rounded-2xl overflow-hidden border-4 border-gold/40 shadow-xl flex items-center justify-center"
           style="background:rgba(13,18,64,0.6)">
@@ -323,7 +388,7 @@
           style="background:rgba(13,18,64,0.6)">
           <span class="text-gold/60 font-garamond italic text-sm text-center px-4">Together Forever</span>
         </div>
-      </div>
+      </div> -->
     </div>
   </section>
 

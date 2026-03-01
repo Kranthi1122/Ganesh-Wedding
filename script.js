@@ -1,9 +1,47 @@
-// PAGE LOADER
+// PAGE LOADER AND INVITATION OVERLAY
 window.addEventListener('load', () => {
     setTimeout(() => {
         document.getElementById('loader').classList.add('hidden');
     }, 2200);
 });
+
+/* ─── INVITATION OVERLAY LOGIC ────────── */
+const overlay = document.getElementById('invitation-overlay');
+const openBtn = document.getElementById('open-invitation-btn');
+const flapTop = document.getElementById('envelope-flap-top');
+const flapBottom = document.getElementById('envelope-flap-bottom');
+const invitationContent = document.getElementById('invitation-content');
+
+if (openBtn) {
+    openBtn.addEventListener('click', () => {
+        // 1. Hide the entire wax seal wrapper
+        const sealWrapper = openBtn.closest('[style*="transform:translate"]') || openBtn.parentElement;
+        if (sealWrapper) {
+            sealWrapper.style.opacity = '0';
+            sealWrapper.style.pointerEvents = 'none';
+            sealWrapper.style.transition = 'opacity 0.3s ease';
+        }
+
+        // 2. Open the flaps
+        if (flapTop) flapTop.classList.add('flap-open-top');
+        if (flapBottom) flapBottom.classList.add('flap-open-bottom');
+
+        // 3. Keep the invitation content visible, then fade out before overlay closes
+        if (invitationContent) {
+            invitationContent.style.transition = 'transform 0.8s ease, opacity 0.5s ease';
+            invitationContent.style.transform = 'scale(1.08)';
+            // Keep content visible for 2.5 seconds, then fade out
+            setTimeout(() => {
+                invitationContent.style.opacity = '0';
+            }, 2500);
+        }
+
+        // 4. Fade out the entire overlay after 3 seconds delay
+        setTimeout(() => {
+            overlay.classList.add('hide-overlay');
+        }, 3000);
+    });
+}
 
 /* ─── COUNTDOWN TIMER (to April 3, 2026 7:30AM IST) ─── */
 function updateCountdown() {
@@ -32,11 +70,12 @@ function updateCountdown() {
 updateCountdown();
 setInterval(updateCountdown, 1000);
 
-/* ─── SMOOTH PARALLAX HERO BG (RAF + Lerp) ─── */
+/* ─── SMOOTH PARALLAX HERO BG (RAF + Lerp, desktop only) ─── */
 const heroBg = document.getElementById('hero-bg');
 let currentY = 0;
 let targetY = 0;
 let rafId = null;
+const isMobile = () => window.innerWidth <= 768;
 
 function lerp(a, b, t) { return a + (b - a) * t; }
 
@@ -53,7 +92,12 @@ function animateParallax() {
 }
 
 window.addEventListener('scroll', () => {
-    targetY = window.scrollY * 0.35;
+    // Skip parallax on mobile to prevent layout shake
+    if (isMobile()) {
+        if (heroBg) heroBg.style.transform = 'none';
+        return;
+    }
+    targetY = window.scrollY * 0.28;
     if (!rafId) {
         rafId = requestAnimationFrame(animateParallax);
     }
@@ -82,10 +126,13 @@ function createPetal() {
     setTimeout(() => el.remove(), (duration + delay) * 1000);
 }
 
-// Create petals continuously
-setInterval(createPetal, 700);
-// Burst on load
-for (let i = 0; i < 12; i++) createPetal();
+// Create petals continuously — fewer on mobile
+const petalInterval = isMobile() ? 1200 : 700;
+if (petalInterval > 0) {
+    setInterval(createPetal, petalInterval);
+    // Burst on load
+    for (let i = 0; i < (isMobile() ? 5 : 8); i++) createPetal();
+}
 
 /* ─── INTERSECTION OBSERVER (Scroll Reveal) ── */
 const revealEls = document.querySelectorAll(
