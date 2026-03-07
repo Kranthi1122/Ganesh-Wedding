@@ -21,13 +21,15 @@
             gold: '#C9A84C',
             'gold-light': '#F0D585',
             'gold-dark': '#8B6914',
-            navy: '#0D1240',
-            'navy-light': '#1A2070',
-            'navy-mid': '#0A0D2E',
+            'warm-dark': '#0F0A06',
+            'warm-mid': '#1C1208',
+            'warm-brown': '#2D1B0E',
+            'warm-accent': '#3D2614',
             saffron: '#E8791A',
             'saffron-light': '#F5A23C',
-            cream: '#FDF6E3',
+            cream: '#FFF8EE',
             ivory: '#FFFFF0',
+            amber: '#D4943A',
           },
           fontFamily: {
             serif: ['Playfair Display', 'serif'],
@@ -41,11 +43,11 @@
 </head>
 
 <body class="font-sans overflow-x-hidden"
-  style="background: linear-gradient(180deg, #030714 0%, #0a0d2e 30%, #060920 60%, #020410 100%); min-height:100vh;">
+  style="background: linear-gradient(180deg, #0F0A06 0%, #1C1208 30%, #150E07 60%, #0A0704 100%); min-height:100vh;">
 
   <!-- PAGE LOADER -->
   <div id="loader" class="fixed inset-0 z-[9999] flex flex-col items-center justify-center"
-    style="background:linear-gradient(135deg,#030714,#0a0d2e,#030714);">
+    style="background:linear-gradient(135deg,#0F0A06,#1C1208,#0F0A06);">
     <div class="om-loader text-gold text-7xl mb-4 animate-pulse">ॐ</div>
     <p class="text-gold-light font-garamond text-xl tracking-widest">Loading Divine Blessings…</p>
     <div class="loader-bar mt-6 w-48 h-1 bg-gold/30 rounded-full overflow-hidden">
@@ -53,62 +55,139 @@
     </div>
   </div>
 
-  <!-- INVITATION OVERLAY CARD -->
+  <!-- INVITATION OVERLAY -->
   <div id="invitation-overlay"
     class="fixed inset-0 z-[9990] flex items-center justify-center overflow-hidden transition-opacity duration-1000 ease-in-out">
 
-    <!-- Background Content -->
+    <!-- Mandap Background -->
     <div class="absolute inset-0 z-0">
-      <img src="invitation_bg.png" alt="Invitation Background" class="w-full h-full object-cover" />
+      <img src="wedding_mandap_bg.png" alt="Wedding Mandap Background" class="w-full h-full object-cover"
+        style="filter: brightness(0.85) saturate(1.1);" />
+      <!-- Warm vignette overlay -->
+      <div class="absolute inset-0"
+        style="background: radial-gradient(ellipse 70% 60% at 50% 50%, transparent 30%, rgba(15,10,6,0.6) 100%);"></div>
     </div>
 
-    <!-- Center Card Text Content -->
+    <!-- Floating golden particles canvas -->
+    <canvas id="invite-particles" class="absolute inset-0 z-[1] pointer-events-none"></canvas>
+
+    <!-- Decorative corner borders -->
+    <div class="absolute top-6 left-6 w-20 h-20 md:w-28 md:h-28 z-[5] pointer-events-none"
+      style="border-top:2px solid rgba(201,168,76,0.6); border-left:2px solid rgba(201,168,76,0.6); border-top-left-radius:12px;">
+    </div>
+    <div class="absolute top-6 right-6 w-20 h-20 md:w-28 md:h-28 z-[5] pointer-events-none"
+      style="border-top:2px solid rgba(201,168,76,0.6); border-right:2px solid rgba(201,168,76,0.6); border-top-right-radius:12px;">
+    </div>
+    <div class="absolute bottom-6 left-6 w-20 h-20 md:w-28 md:h-28 z-[5] pointer-events-none"
+      style="border-bottom:2px solid rgba(201,168,76,0.6); border-left:2px solid rgba(201,168,76,0.6); border-bottom-left-radius:12px;">
+    </div>
+    <div class="absolute bottom-6 right-6 w-20 h-20 md:w-28 md:h-28 z-[5] pointer-events-none"
+      style="border-bottom:2px solid rgba(201,168,76,0.6); border-right:2px solid rgba(201,168,76,0.6); border-bottom-right-radius:12px;">
+    </div>
+
+    <!-- Center Invitation Content -->
     <div
-      class="relative z-10 flex flex-col items-center justify-center text-center px-4 mt-16 md:mt-32 transition-opacity duration-700 ease-in-out"
+      class="relative z-[30] flex flex-col items-center justify-center text-center px-6 transition-all duration-700 ease-in-out"
       id="invitation-content">
-      <img src="vinayaka_logo.png" alt="Om Ganeshay Namah" class="vinayaka-logo w-20 md:w-28 mb-4" />
 
-      <h2 class="font-serif text-5xl md:text-7xl mb-4" style="color: #791e35;">Wedding</h2>
-      <p class="font-garamond italic text-2xl md:text-3xl tracking-widest mb-6" style="color: #791e35;">Invitation</p>
+      <!-- Lord Ganesh Logo -->
+      <img src="vinayaka_logo.png" alt="Lord Ganesh" class="vinayaka-logo w-24 md:w-36 mb-4 rounded-full"
+        style="border: 2px solid rgba(201,168,76,0.4); box-shadow: 0 0 40px rgba(201,168,76,0.3);" />
 
+      <!-- Om Symbol -->
+      <div class="text-gold text-4xl md:text-5xl mb-3 glow-text"
+        style="text-shadow: 0 0 24px rgba(201,168,76,0.8), 0 0 50px rgba(201,168,76,0.3);">ॐ</div>
+
+      <!-- Ganesh Blessing Quotation -->
+      <div class="max-w-lg mx-auto mb-3">
+        <p class="font-garamond italic text-lg md:text-2xl text-gold-light leading-relaxed"
+          style="text-shadow: 0 2px 15px rgba(0,0,0,0.6), 0 0 30px rgba(0,0,0,0.3);">
+          "Vakratunda Mahakaya, Suryakoti Samaprabha<br />
+          Nirvighnam Kuru Me Deva, Sarva Kaaryeshu Sarvada"
+        </p>
+      </div>
+
+      <!-- Meaning -->
+      <p class="font-sans text-xs md:text-sm text-cream/60 max-w-md mx-auto tracking-wide leading-relaxed mb-2"
+        style="text-shadow: 0 2px 10px rgba(0,0,0,0.5);">
+        O Lord with a curved trunk and mighty body, whose brilliance equals a billion suns —
+        please remove all obstacles and bless every endeavor, always.
+      </p>
+
+      <!-- Decorative divider -->
       <div class="flex items-center justify-center gap-3 my-4">
-        <div class="h-px w-16 md:w-24 bg-gold/80"></div>
-        <span class="text-gold text-xl">✦</span>
-        <div class="h-px w-16 md:w-24 bg-gold/80"></div>
+        <div class="h-px w-12 md:w-20" style="background: linear-gradient(90deg, transparent, #C9A84C);"></div>
+        <span class="text-gold text-lg">🙏</span>
+        <div class="h-px w-12 md:w-20" style="background: linear-gradient(90deg, #C9A84C, transparent);"></div>
       </div>
 
-      <h1 class="font-serif text-4xl md:text-6xl mt-6 italic" style="color: #791e35;">Ganesh &amp; Harika</h1>
+      <!-- Subtle wedding reference -->
+      <p class="font-garamond italic text-gold/70 text-sm md:text-base tracking-wider"
+        style="text-shadow: 0 2px 10px rgba(0,0,0,0.5);">
+        With Divine Blessings for the Sacred Union
+      </p>
 
-      <div class="mt-8">
-        <div class="flex items-center justify-center text-gold text-3xl">
-          <span class="mr-2">❈</span><span class="text-2xl">✤</span><span class="ml-2">❈</span>
+      <!-- Open Invitation Button -->
+      <button id="open-invitation-btn"
+        class="invite-open-btn group relative px-8 py-3 md:px-10 md:py-4 rounded-full font-sans font-semibold text-sm md:text-base tracking-widest uppercase transition-all duration-500 focus:outline-none"
+        aria-label="Open Wedding Invitation"
+        style="background: linear-gradient(135deg, #C9A84C, #D4943A, #C9A84C);
+               color: #1C1208;
+               box-shadow: 0 0 30px rgba(201,168,76,0.4), 0 4px 20px rgba(0,0,0,0.3), inset 0 1px 0 rgba(255,255,255,0.2);">
+        <span class="relative z-10">Open Invitation</span>
+        <!-- Button shimmer -->
+        <div class="absolute inset-0 rounded-full overflow-hidden">
+          <div class="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"
+            style="background: linear-gradient(135deg, #F0D585, #E8791A, #F0D585);"></div>
         </div>
+      </button>
+    </div>
+
+    <!-- LEFT CURTAIN -->
+    <div id="curtain-left" class="absolute top-0 left-0 h-full z-20 transition-transform duration-[1500ms] ease-in-out"
+      style="width: 50%; transform: translateX(0);">
+      <div class="w-full h-full relative overflow-hidden" style="background: linear-gradient(90deg, #1C1208 0%, #2D1B0E 70%, #3D2614 90%, #4A2C17 100%);
+               box-shadow: 10px 0 40px rgba(0,0,0,0.6), inset -20px 0 40px rgba(0,0,0,0.3);">
+        <!-- Curtain fabric texture -->
+        <div class="absolute inset-0"
+          style="background: repeating-linear-gradient(90deg, transparent, transparent 3px, rgba(201,168,76,0.03) 3px, rgba(201,168,76,0.03) 4px);">
+        </div>
+        <!-- Golden edge trim -->
+        <div class="absolute top-0 right-0 w-6 h-full" style="background: linear-gradient(180deg, #C9A84C, #8B6914, #C9A84C, #8B6914, #C9A84C);
+                 opacity: 0.5;"></div>
+        <!-- Decorative pattern on curtain -->
+        <div
+          class="absolute top-1/2 right-12 -translate-y-1/2 text-gold/10 text-9xl font-serif pointer-events-none select-none"
+          style="font-size: 14rem; line-height:1;">ॐ</div>
       </div>
     </div>
 
-    <!-- Envelope Flaps -->
-    <!-- Top Flap -->
-    <div id="envelope-flap-top"
-      class="absolute top-0 left-0 w-full z-20 transition-transform duration-1000 ease-in-out origin-top"
-      style="height: 50vh;">
-      <img src="envelope_flap_top.png" alt="Top Flap"
-        class="w-full h-full object-cover object-bottom shadow-[0_10px_30px_rgba(0,0,0,0.5)]" />
+    <!-- RIGHT CURTAIN -->
+    <div id="curtain-right"
+      class="absolute top-0 right-0 h-full z-20 transition-transform duration-[1500ms] ease-in-out"
+      style="width: 50%; transform: translateX(0);">
+      <div class="w-full h-full relative overflow-hidden" style="background: linear-gradient(270deg, #1C1208 0%, #2D1B0E 70%, #3D2614 90%, #4A2C17 100%);
+               box-shadow: -10px 0 40px rgba(0,0,0,0.6), inset 20px 0 40px rgba(0,0,0,0.3);">
+        <!-- Curtain fabric texture -->
+        <div class="absolute inset-0"
+          style="background: repeating-linear-gradient(90deg, transparent, transparent 3px, rgba(201,168,76,0.03) 3px, rgba(201,168,76,0.03) 4px);">
+        </div>
+        <!-- Golden edge trim -->
+        <div class="absolute top-0 left-0 w-6 h-full" style="background: linear-gradient(180deg, #C9A84C, #8B6914, #C9A84C, #8B6914, #C9A84C);
+                 opacity: 0.5;"></div>
+        <!-- Decorative pattern on curtain -->
+        <div
+          class="absolute top-1/2 left-12 -translate-y-1/2 text-gold/10 text-9xl font-serif pointer-events-none select-none"
+          style="font-size: 14rem; line-height:1;">ॐ</div>
+      </div>
     </div>
 
-    <!-- Bottom Flap -->
-    <div id="envelope-flap-bottom"
-      class="absolute bottom-0 left-0 w-full z-20 transition-transform duration-1000 ease-in-out origin-bottom"
-      style="height: 50vh;">
-      <img src="envelope_flap_bottom.png" alt="Bottom Flap"
-        class="w-full h-full object-cover object-top shadow-[0_-10px_30px_rgba(0,0,0,0.5)]" />
-    </div>
-
-    <!-- Center Wax Seal Button -->
-    <div class="absolute z-30 pulse-animation"
-      style="top:50%; left:50%; transform:translate(-50%,-50%); width:10rem; height:10rem;">
-      <button id="open-invitation-btn" class="w-full h-full focus:outline-none" aria-label="Open Wedding Invitation">
-        <img src="wax_seal.png" alt="Open Invitation" class="w-full h-full" />
-      </button>
+    <!-- Top golden valance -->
+    <div class="absolute top-0 left-0 right-0 h-16 md:h-20 z-[25] pointer-events-none"
+      style="background: linear-gradient(180deg, rgba(15,10,6,0.95) 0%, rgba(15,10,6,0.6) 60%, transparent 100%);">
+      <div class="absolute bottom-0 left-0 right-0 h-1"
+        style="background: linear-gradient(90deg, transparent 10%, rgba(201,168,76,0.4) 30%, rgba(201,168,76,0.6) 50%, rgba(201,168,76,0.4) 70%, transparent 90%);">
+      </div>
     </div>
 
   </div>
@@ -117,8 +196,8 @@
   <div id="petals-container" class="fixed inset-0 pointer-events-none z-10"></div>
 
   <!-- NAVBAR -->
-  <nav class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b border-gold/30"
-    style="background:rgba(10,13,46,0.88);">
+  <nav class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b border-gold/20"
+    style="background:linear-gradient(180deg, rgba(15,10,6,0.92), rgba(28,18,8,0.88));">
     <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
       <img src="gh_logo.png" alt="Ganesh & Harika"
         class="h-10 w-auto md:h-12 hover:scale-105 transition-transform duration-300" />
@@ -138,10 +217,12 @@
       <img src="temple_hero.png" alt="Srisailam Temple"
         style="width:100%;height:100%;object-fit:cover;object-position:center top;display:block;" />
     </div>
-    <!-- Dark gradient overlay -->
+    <!-- Warm gradient overlay -->
     <div class="absolute inset-0"
-      style="background:linear-gradient(180deg,rgba(10,13,46,0.80) 0%,rgba(6,9,32,0.50) 40%,rgba(3,7,20,0.85) 100%);">
+      style="background:linear-gradient(180deg,rgba(15,10,6,0.82) 0%,rgba(28,18,8,0.45) 40%,rgba(15,10,6,0.88) 100%);">
     </div>
+    <!-- Sparkle field -->
+    <div class="sparkle-field"></div>
     <!-- Gold shimmer lines -->
     <div class="absolute inset-0 hero-shimmer pointer-events-none"></div>
 
@@ -190,7 +271,7 @@
         <div class="text-gold self-center hidden sm:block text-2xl">✦</div>
         <div class="glass-card px-5 py-3 text-center">
           <p class="text-gold text-xs tracking-widest uppercase mb-1">Wedding Ceremony</p>
-          <p class="text-cream font-garamond text-lg">April 3 · 7:30 AM</p>
+          <p class="text-cream font-garamond text-lg">April 3 · 7:46 AM</p>
         </div>
       </div>
 
@@ -220,9 +301,12 @@
     </div>
   </section>
 
+  <!-- ============ SHIMMER WAVE DIVIDER ============ -->
+  <div class="shimmer-wave"></div>
+
   <!-- ============ MANDALA DIVIDER ============ -->
   <div class="mandala-divider py-6 flex items-center justify-center"
-    style="background:linear-gradient(90deg,#030714,#0a0d2e,#030714);">
+    style="background:linear-gradient(90deg,#0F0A06,#1C1208,#0F0A06);">
     <div class="mandala-svg w-24 h-24 text-gold opacity-80">
       <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
         <circle cx="50" cy="50" r="45" stroke="currentColor" stroke-width="1.5" stroke-dasharray="4 3" />
@@ -255,8 +339,14 @@
   </div>
 
   <!-- ============ EVENTS SECTION ============ -->
-  <section id="events" class="py-20 px-4 relative overflow-hidden"
-    style="background:linear-gradient(180deg,#0a0d2e 0%,#030714 100%);">
+  <section id="events" class="py-20 px-4 relative overflow-hidden warm-gradient-section"
+    style="background:linear-gradient(180deg,#1C1208 0%,#0F0A06 100%);">
+    <!-- Corner ornaments -->
+    <div class="ornament-corner top-left"></div>
+    <div class="ornament-corner top-right"></div>
+    <div class="ornament-corner bottom-left"></div>
+    <div class="ornament-corner bottom-right"></div>
+
     <div class="floral-bg absolute inset-0 opacity-5 pointer-events-none"></div>
     <div class="max-w-5xl mx-auto">
       <h2 class="section-title text-center font-serif text-4xl md:text-5xl text-gold mb-2">Sacred Celebrations</h2>
@@ -270,7 +360,7 @@
         <!-- Event 1: Dinner -->
         <div class="event-card fade-in-left opacity-0 mb-12 md:mb-20 flex flex-col md:flex-row items-center gap-6">
           <div class="md:w-1/2 md:text-right md:pr-12">
-            <div class="glass-card-maroon p-6 md:p-8 rounded-2xl text-left md:text-right">
+            <div class="glass-card-warm p-6 md:p-8 rounded-2xl text-left md:text-right">
               <div class="flex md:justify-end items-center gap-3 mb-4">
                 <span class="text-3xl">🍽️</span>
                 <span class="text-gold font-sans text-xs tracking-widest uppercase">Pre-Wedding</span>
@@ -290,7 +380,7 @@
           <!-- Timeline node -->
           <div
             class="hidden md:flex flex-shrink-0 w-12 h-12 rounded-full border-2 border-gold items-center justify-center z-10"
-            style="background:#0a0d2e;">
+            style="background:#1C1208;">
             <span class="text-gold text-xl">①</span>
           </div>
           <div class="md:w-1/2 hidden md:block"></div>
@@ -302,11 +392,11 @@
           <!-- Timeline node -->
           <div
             class="hidden md:flex flex-shrink-0 w-12 h-12 rounded-full border-2 border-gold items-center justify-center z-10"
-            style="background:#0a0d2e;">
+            style="background:#1C1208;">
             <span class="text-gold text-xl">②</span>
           </div>
           <div class="md:w-1/2 md:pl-12">
-            <div class="glass-card-maroon p-6 md:p-8 rounded-2xl">
+            <div class="glass-card-warm p-6 md:p-8 rounded-2xl">
               <div class="flex items-center gap-3 mb-4">
                 <span class="text-3xl">🛕</span>
                 <span class="text-gold font-sans text-xs tracking-widest uppercase">Main Ceremony</span>
@@ -314,35 +404,70 @@
               <h3 class="font-serif text-3xl text-gold mb-1">Wedding Ceremony</h3>
               <p class="text-gold-light font-garamond italic text-lg mb-4">A Divine Union</p>
               <div class="space-y-2 text-cream/90 font-sans text-sm">
-                <div class="flex items-center gap-2"><span class="text-gold">📅</span> April 3, 2026</div>
-                <div class="flex items-center gap-2"><span class="text-gold">🕖</span> 7:30 AM</div>
-                <div class="flex items-center gap-2"><span class="text-gold">🛕</span> Srisailam Mallikarjuna Swamy
-                  Temple</div>
-                <div class="flex items-center gap-2"><span class="text-gold">📍</span> Srisailam, Andhra Pradesh</div>
-                <div class="flex items-center gap-2"><span class="text-gold">🌐</span> 16.0805° N, 78.8509° E</div>
+                <div class="flex items-center gap-2"><span class="text-gold">📅</span> Friday, April 3, 2026</div>
+                <div class="flex items-center gap-2"><span class="text-gold">🕖</span> Muhurtham: 7:46 AM</div>
+                <div class="flex items-center gap-2"><span class="text-gold">🛕</span> Srisailam Mallikarjuna Swami
+                  Devasthanam</div>
+                <div class="flex items-center gap-2"><span class="text-gold">📍</span> Kalatirtha Kanya Satram, Opp.
+                  R.T.C Bus Stand, Srisailam</div>
               </div>
             </div>
           </div>
+        </div>
+
+        <!-- Event 3: Lunch -->
+        <div class="event-card fade-in-left opacity-0 mt-12 md:mt-20 flex flex-col md:flex-row items-center gap-6">
+          <div class="md:w-1/2 md:text-right md:pr-12">
+            <div class="glass-card-warm p-6 md:p-8 rounded-2xl text-left md:text-right">
+              <div class="flex md:justify-end items-center gap-3 mb-4">
+                <span class="text-3xl">🍛</span>
+                <span class="text-gold font-sans text-xs tracking-widest uppercase">Post-Ceremony</span>
+              </div>
+              <h3 class="font-serif text-3xl text-gold mb-1">Wedding Lunch</h3>
+              <p class="text-gold-light font-garamond italic text-lg mb-4">Celebratory Feast</p>
+              <div class="space-y-2 text-cream/90 font-sans text-sm">
+                <div class="flex md:justify-end items-center gap-2"><span class="text-gold">📅</span> Friday, April 3,
+                  2026</div>
+                <div class="flex md:justify-end items-center gap-2"><span class="text-gold">🕛</span> 12:00 PM onwards
+                </div>
+                <div class="flex md:justify-end items-center gap-2"><span class="text-gold">📍</span> At the Venue</div>
+              </div>
+            </div>
+          </div>
+          <!-- Timeline node -->
+          <div
+            class="hidden md:flex flex-shrink-0 w-12 h-12 rounded-full border-2 border-gold items-center justify-center z-10"
+            style="background:#1C1208;">
+            <span class="text-gold text-xl">③</span>
+          </div>
+          <div class="md:w-1/2 hidden md:block"></div>
         </div>
       </div>
     </div>
   </section>
 
+  <!-- ============ SHIMMER WAVE ============ -->
+  <div class="shimmer-wave"></div>
+
   <!-- ============ OUR STORY SECTION ============ -->
-  <section id="story" class="py-20 px-4 relative overflow-hidden"
-    style="background: linear-gradient(180deg, #030714 0%, #0a0d2e 100%);">
+  <section id="story" class="py-20 px-4 relative overflow-hidden warm-gradient-section"
+    style="background: linear-gradient(180deg, #0F0A06 0%, #1C1208 100%);">
+    <!-- Corner ornaments -->
+    <div class="ornament-corner top-left"></div>
+    <div class="ornament-corner top-right"></div>
+
     <div class="rangoli-bg absolute inset-0 opacity-5 pointer-events-none"></div>
     <div class="max-w-4xl mx-auto">
       <h2 class="section-title text-center font-serif text-4xl md:text-5xl text-gold mb-2">Our Sacred Journey</h2>
       <p class="text-center text-gold-light font-garamond italic text-lg mb-14">A story written by destiny</p>
 
       <!-- Story Timeline -->
-      <div class="space-y-10">
+      <div class="space-y-10 reveal-stagger">
         <div class="story-item fade-in-up opacity-0 flex gap-6 items-start" style="animation-delay:0.1s">
           <div class="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-gold text-xl shadow-lg"
-            style="background:linear-gradient(135deg,#1a2070,#0a0d2e); border:1px solid rgba(201,168,76,0.5);">
+            style="background:linear-gradient(135deg,#2D1B0E,#1C1208); border:1px solid rgba(201,168,76,0.5);">
             🌸</div>
-          <div class="glass-card-maroon rounded-2xl p-6 border border-gold/20 flex-1">
+          <div class="glass-card-warm rounded-2xl p-6 border border-gold/20 flex-1">
             <h4 class="font-serif text-gold text-xl mb-1">First Encounter</h4>
             <p class="text-cream/80 font-sans text-sm leading-relaxed">Two souls destined to meet, brought together by
               divine grace and the blessings of Lord Ganesha. Their paths crossed in a moment written in the stars.</p>
@@ -350,9 +475,9 @@
         </div>
         <div class="story-item fade-in-up opacity-0 flex gap-6 items-start" style="animation-delay:0.3s">
           <div class="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-gold text-xl shadow-lg"
-            style="background:linear-gradient(135deg,#1a2070,#0a0d2e); border:1px solid rgba(201,168,76,0.5);">
+            style="background:linear-gradient(135deg,#2D1B0E,#1C1208); border:1px solid rgba(201,168,76,0.5);">
             💛</div>
-          <div class="glass-card-maroon rounded-2xl p-6 border border-gold/20 flex-1">
+          <div class="glass-card-warm rounded-2xl p-6 border border-gold/20 flex-1">
             <h4 class="font-serif text-gold text-xl mb-1">Growing Together</h4>
             <p class="text-cream/80 font-sans text-sm leading-relaxed">Through laughter, dreams, and quiet moments,
               Ganesh and Harika wove a bond as timeless as the sacred ghats of Srisailam.</p>
@@ -360,9 +485,9 @@
         </div>
         <div class="story-item fade-in-up opacity-0 flex gap-6 items-start" style="animation-delay:0.5s">
           <div class="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-gold text-xl shadow-lg"
-            style="background:linear-gradient(135deg,#1a2070,#0a0d2e); border:1px solid rgba(201,168,76,0.5);">
+            style="background:linear-gradient(135deg,#2D1B0E,#1C1208); border:1px solid rgba(201,168,76,0.5);">
             🔔</div>
-          <div class="glass-card-maroon rounded-2xl p-6 border border-gold/20 flex-1">
+          <div class="glass-card-warm rounded-2xl p-6 border border-gold/20 flex-1">
             <h4 class="font-serif text-gold text-xl mb-1">The Sacred Promise</h4>
             <p class="text-cream/80 font-sans text-sm leading-relaxed">Beneath the divine gopuram of Mallikarjuna Swamy
               Temple, they will take their Saptapadi — seven sacred vows — to walk together through all of life's
@@ -370,30 +495,11 @@
           </div>
         </div>
       </div>
-
-      <!-- Photo placeholders -->
-      <!-- <div class="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-14">
-        <div
-          class="photo-frame aspect-square rounded-2xl overflow-hidden border-4 border-gold/40 shadow-xl flex items-center justify-center"
-          style="background:rgba(13,18,64,0.6)">
-          <span class="text-gold/60 font-garamond italic text-sm text-center px-4">Photo of the Couple</span>
-        </div>
-        <div
-          class="photo-frame aspect-square rounded-2xl overflow-hidden border-4 border-gold/40 shadow-xl flex items-center justify-center"
-          style="background:rgba(13,18,64,0.6)">
-          <span class="text-gold/60 font-garamond italic text-sm text-center px-4">Special Moment</span>
-        </div>
-        <div
-          class="photo-frame aspect-square rounded-2xl overflow-hidden border-4 border-gold/40 shadow-xl flex items-center justify-center"
-          style="background:rgba(13,18,64,0.6)">
-          <span class="text-gold/60 font-garamond italic text-sm text-center px-4">Together Forever</span>
-        </div>
-      </div> -->
     </div>
   </section>
 
   <!-- Mandala Divider 2 -->
-  <div class="py-4 flex items-center justify-center" style="background:linear-gradient(180deg,#0a0d2e,#060920);">
+  <div class="py-4 flex items-center justify-center" style="background:linear-gradient(180deg,#1C1208,#150E07);">
     <div class="h-px flex-1 max-w-xs bg-gold/40 mx-4"></div>
     <span class="text-gold text-3xl">✦</span>
     <div class="h-px flex-1 max-w-xs bg-gold/40 mx-4"></div>
@@ -406,33 +512,38 @@
         style="width:100%;height:100%;object-fit:cover;object-position:center center;display:block;" />
     </div>
     <div class="absolute inset-0"
-      style="background: linear-gradient(135deg, rgba(3,7,20,0.85) 0%, rgba(10,13,46,0.78) 50%, rgba(3,7,20,0.88) 100%); backdrop-filter:blur(1px);">
+      style="background: linear-gradient(135deg, rgba(15,10,6,0.88) 0%, rgba(28,18,8,0.80) 50%, rgba(15,10,6,0.90) 100%); backdrop-filter:blur(1px);">
     </div>
     <div class="relative z-10 max-w-4xl mx-auto">
       <h2 class="section-title text-center font-serif text-4xl md:text-5xl text-gold mb-2">The Sacred Venue</h2>
       <p class="text-center text-gold-light font-garamond italic text-lg mb-10">Where heaven meets earth</p>
 
-      <div class="glass-card-maroon rounded-3xl p-6 md:p-10 mb-8">
+      <div class="glass-card-warm rounded-3xl p-6 md:p-10 mb-8">
         <div class="flex flex-col md:flex-row gap-8 items-center">
           <div class="flex-1">
             <div class="text-5xl mb-4">🛕</div>
-            <h3 class="font-serif text-3xl text-gold mb-2">Srisailam Mallikarjuna Swamy Temple</h3>
+            <h3 class="font-serif text-3xl text-gold mb-2">Srisailam Mallikarjuna Swami Devasthanam</h3>
             <p class="text-gold-light font-garamond italic text-lg mb-4">One of the 12 sacred Jyotirlinga Shrines</p>
             <div class="space-y-3 text-cream/90 font-sans text-sm">
               <div class="flex items-start gap-3">
                 <span class="text-gold mt-0.5">📍</span>
                 <div>
-                  <p class="font-semibold text-gold-light">Srisailam, Andhra Pradesh, India</p>
-                  <p class="text-cream/70">Coordinates: 16.0805° N, 78.8509° E</p>
+                  <p class="font-semibold text-gold-light">Kalatirtha Kanya Satram</p>
+                  <p class="text-cream/70">Opp. R.T.C Bus Stand, Srisailam</p>
+                  <p class="text-cream/70">Andhra Pradesh, India</p>
                 </div>
               </div>
               <div class="flex items-center gap-3">
                 <span class="text-gold">📅</span>
-                <p>April 3, 2026 · 7:30 AM</p>
+                <p>Friday, April 3, 2026 · Muhurtham: 7:46 AM</p>
+              </div>
+              <div class="flex items-center gap-3">
+                <span class="text-gold">🍛</span>
+                <p>Lunch: 12:00 PM onwards</p>
               </div>
             </div>
             <a href="https://www.google.com/maps?q=16.0805,78.8509" target="_blank" rel="noopener"
-              class="mt-6 inline-flex items-center gap-2 bg-gold text-maroon font-sans font-bold text-sm px-6 py-3 rounded-full hover:bg-gold-light transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-gold/30">
+              class="mt-6 inline-flex items-center gap-2 bg-gold text-warm-dark font-sans font-bold text-sm px-6 py-3 rounded-full hover:bg-gold-light transition-all duration-300 hover:scale-105 shadow-lg hover:shadow-gold/30">
               🗺️ Get Directions
             </a>
           </div>
@@ -450,52 +561,86 @@
     </div>
   </section>
 
+  <!-- ============ SHIMMER WAVE ============ -->
+  <div class="shimmer-wave"></div>
+
   <!-- ============ FAMILY SECTION ============ -->
-  <section id="family" class="py-20 px-4"
-    style="background:linear-gradient(180deg,#0a0d2e 0%,#060920 50%,#030714 100%);">
+  <section id="family" class="py-20 px-4 relative warm-gradient-section"
+    style="background:linear-gradient(180deg,#1C1208 0%,#150E07 50%,#0F0A06 100%);">
+    <!-- Corner ornaments -->
+    <div class="ornament-corner top-left"></div>
+    <div class="ornament-corner top-right"></div>
+    <div class="ornament-corner bottom-left"></div>
+    <div class="ornament-corner bottom-right"></div>
+
     <div class="max-w-5xl mx-auto">
       <h2 class="section-title text-center font-serif text-4xl md:text-5xl text-gold mb-2">Blessed Families</h2>
       <p class="text-center text-gold-light font-garamond italic text-lg mb-14">United by love and divine grace</p>
 
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8 reveal-stagger">
         <!-- Groom's Family -->
         <div
-          class="family-card fade-in-left opacity-0 glass-card-maroon rounded-3xl p-8 shadow-xl border border-gold/30 text-center">
+          class="family-card scale-in opacity-0 glass-card-warm rounded-3xl p-8 shadow-xl border border-gold/30 text-center">
           <div class="text-5xl mb-4">👨‍👩‍👦</div>
           <h3 class="font-serif text-2xl text-gold mb-1">Groom's Family</h3>
           <p class="text-gold-light font-garamond italic text-lg mb-4">Thotakura Family</p>
           <div class="text-cream/80 font-sans text-sm space-y-1">
             <p class="font-semibold text-gold-light text-base">Ganesh Thotakura</p>
-            <p class="text-gold text-xs tracking-widest uppercase">The Groom</p>
+            <p class="text-gold text-xs tracking-widest uppercase mb-3">The Groom</p>
           </div>
-          <div class="mt-4 pt-4 border-t border-gold/20">
-            <p class="text-cream/60 font-garamond italic text-sm">S/o of the esteemed Thotakura family</p>
+          <div class="mt-4 pt-4 border-t border-gold/20 space-y-2">
+            <p class="text-cream/80 font-sans text-sm"><span class="text-gold-light font-semibold">S/o</span> Sri
+              Thotakura Srinivasa Varma</p>
+            <p class="text-cream/80 font-sans text-sm">&amp; Smt. Lalitha</p>
+            <div class="flex items-center justify-center gap-2 mt-3">
+              <span class="text-gold text-xs">📍</span>
+              <p class="text-cream/60 font-garamond italic text-xs">Dharmavarappadu Village, Jaggaiahpet Mandal, N.T.R
+                Dist.</p>
+            </div>
           </div>
         </div>
         <!-- Bride's Family -->
         <div
-          class="family-card fade-in-right opacity-0 glass-card-maroon rounded-3xl p-8 shadow-xl border border-gold/30 text-center">
+          class="family-card scale-in opacity-0 glass-card-warm rounded-3xl p-8 shadow-xl border border-gold/30 text-center">
           <div class="text-5xl mb-4">👨‍👩‍👧</div>
           <h3 class="font-serif text-2xl text-gold mb-1">Bride's Family</h3>
           <p class="text-gold-light font-garamond italic text-lg mb-4">Gali Family</p>
           <div class="text-cream/80 font-sans text-sm space-y-1">
             <p class="font-semibold text-gold-light text-base">Harika Gali</p>
-            <p class="text-gold text-xs tracking-widest uppercase">The Bride</p>
+            <p class="text-gold text-xs tracking-widest uppercase mb-3">The Bride</p>
           </div>
-          <div class="mt-4 pt-4 border-t border-gold/20">
-            <p class="text-cream/60 font-garamond italic text-sm">D/o of the esteemed Gali family</p>
+          <div class="mt-4 pt-4 border-t border-gold/20 space-y-2">
+            <p class="text-cream/80 font-sans text-sm"><span class="text-gold-light font-semibold">D/o</span> Sri Gali
+              Venkateswara Rao</p>
+            <p class="text-cream/80 font-sans text-sm">&amp; Smt. Bhu Lakshmi</p>
+            <div class="flex items-center justify-center gap-2 mt-3">
+              <span class="text-gold text-xs">📍</span>
+              <p class="text-cream/60 font-garamond italic text-xs">Loyapalli Village, Veduru Mandal, Palnadu Dist.</p>
+            </div>
           </div>
         </div>
       </div>
 
-      <!-- Blessings Quote -->
-      <div class="mt-14 text-center">
-        <div class="inline-block glass-card-maroon px-8 py-6 rounded-3xl border border-gold/40 shadow-lg">
-          <p class="text-gold text-3xl mb-3">☸️</p>
-          <p class="font-garamond italic text-gold-light text-lg md:text-xl leading-relaxed max-w-xl">
-            "Two souls, one heart — blessed by the divine, united by love, and celebrated by family."
+      <!-- Invited By -->
+      <div class="mt-14 text-center fade-in-up opacity-0">
+        <div class="inline-block glass-card-warm px-10 py-8 rounded-3xl border border-gold/40 shadow-lg max-w-lg">
+          <p class="text-gold text-3xl mb-3">🙏</p>
+          <p class="text-gold font-sans text-xs tracking-[0.2em] uppercase mb-4">Invited By</p>
+          <div class="space-y-1 mb-4">
+            <p class="font-serif text-xl text-gold-light">Sri Gali Venkateswara Rao</p>
+            <p class="text-cream/70 font-garamond italic text-sm">&amp;</p>
+            <p class="font-serif text-xl text-gold-light">Smt. Gali Bhu Lakshmi</p>
+          </div>
+          <div class="flex items-center justify-center gap-3 my-4">
+            <div class="h-px w-12 bg-gold/40"></div>
+            <span class="text-gold text-sm">✦</span>
+            <div class="h-px w-12 bg-gold/40"></div>
+          </div>
+          <p class="font-garamond italic text-gold-light/80 text-sm leading-relaxed">
+            "With Best Compliments from near &amp; dear"</p>
+          <p class="font-garamond italic text-cream/50 text-xs mt-3">
+            We solicit your blessings and gracious presence with family and friends on the auspicious occasion
           </p>
-          <p class="text-gold mt-3 font-sans text-sm tracking-widest">— WITH FAMILY BLESSINGS</p>
         </div>
       </div>
     </div>
@@ -503,7 +648,9 @@
 
   <!-- ============ FOOTER ============ -->
   <footer class="text-cream pt-14 pb-8 px-4 relative overflow-hidden"
-    style="background:linear-gradient(180deg,#030714,#0a0d2e,#030714);">
+    style="background:linear-gradient(180deg,#0F0A06,#1C1208,#0F0A06);">
+    <!-- Sparkle field -->
+    <div class="sparkle-field" style="opacity:0.5;"></div>
     <div class="absolute inset-0 hero-shimmer opacity-30 pointer-events-none"></div>
     <div class="max-w-4xl mx-auto relative z-10">
       <!-- Names -->
@@ -521,16 +668,22 @@
         </div>
         <div class="glass-card rounded-2xl p-5 text-center flex-1 max-w-xs mx-auto">
           <p class="text-gold text-xs tracking-widest uppercase mb-1">Wedding Ceremony</p>
-          <p class="text-cream font-garamond text-lg">April 3 · 7:30 AM</p>
-          <p class="text-gold-light/70 text-xs mt-1">Srisailam Mallikarjuna Swamy Temple</p>
+          <p class="text-cream font-garamond text-lg">April 3 · 7:46 AM</p>
+          <p class="text-gold-light/70 text-xs mt-1">Srisailam Mallikarjuna Swami Devasthanam</p>
         </div>
       </div>
 
       <!-- Diya flame animation -->
       <div class="flex justify-center gap-8 mb-8">
-        <div class="diya text-3xl">🪔</div>
-        <div class="diya text-3xl" style="animation-delay:0.5s">🪔</div>
-        <div class="diya text-3xl" style="animation-delay:1s">🪔</div>
+        <div class="diya-glow-ring">
+          <div class="diya text-3xl">🪔</div>
+        </div>
+        <div class="diya-glow-ring">
+          <div class="diya text-3xl" style="animation-delay:0.5s">🪔</div>
+        </div>
+        <div class="diya-glow-ring">
+          <div class="diya text-3xl" style="animation-delay:1s">🪔</div>
+        </div>
       </div>
 
       <!-- Blessing Message -->
