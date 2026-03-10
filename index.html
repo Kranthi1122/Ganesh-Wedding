@@ -200,14 +200,30 @@
   <!-- NAVBAR -->
   <nav class="fixed top-0 left-0 right-0 z-50 backdrop-blur-md border-b border-gold/20"
     style="background:linear-gradient(180deg, rgba(15,10,6,0.92), rgba(28,18,8,0.88));">
-    <div class="max-w-6xl mx-auto px-4 py-3 flex items-center justify-between">
+
+    <!-- DESKTOP VIEW -->
+    <div class="max-w-6xl mx-auto px-4 py-3 hidden md:flex items-center justify-between">
       <img src="gh_logo.png" alt="Ganesh & Harika"
         class="h-10 w-auto md:h-12 hover:scale-105 transition-transform duration-300" />
-      <div class="hidden md:flex gap-6 text-gold-light font-sans text-sm tracking-widest">
+      <div class="flex gap-6 text-gold-light font-sans text-sm tracking-widest">
         <a href="#events" class="hover:text-gold transition-colors">Events</a>
         <a href="#story" class="hover:text-gold transition-colors">Our Story</a>
         <a href="#venue" class="hover:text-gold transition-colors">Venue</a>
         <a href="#family" class="hover:text-gold transition-colors">Family</a>
+      </div>
+    </div>
+
+    <!-- MOBILE VIEW (Decorative Header) -->
+    <div class="flex md:hidden flex-col items-center justify-center py-3 px-4 w-full">
+      <div class="flex items-center justify-center gap-4 w-full max-w-[280px]">
+        <div class="h-px flex-1" style="background: linear-gradient(90deg, transparent, rgba(201,168,76,0.6));"></div>
+        <div class="text-center flex flex-col items-center justify-center">
+          <h2 class="font-serif text-2xl text-gold glow-text leading-none">G <span
+              class="text-gold-light/70 font-garamond italic text-xl">&amp;</span> H</h2>
+          <p class="text-gold-light font-sans text-[0.55rem] tracking-[0.2em] uppercase mt-1.5 opacity-90">Wedding
+            Invitation</p>
+        </div>
+        <div class="h-px flex-1" style="background: linear-gradient(90deg, rgba(201,168,76,0.6), transparent);"></div>
       </div>
     </div>
   </nav>
@@ -377,7 +393,7 @@
               <h3 class="font-serif text-3xl text-gold mb-1">Wedding Ceremony</h3>
               <p class="text-gold-light font-garamond italic text-lg mb-4">A Divine Union</p>
               <div class="space-y-2 text-cream/90 font-sans text-sm">
-                <div class="flex md:justify-end items-center gap-2"><span class="text-gold">📅</span> Friday, April 3,
+                <div class="flex md:justify-end items-center gap-2"><span class="text-gold">✨</span> Friday, April 3,
                   2026</div>
                 <div class="flex md:justify-end items-center gap-2"><span class="text-gold">🕖</span> Muhurtham: 7:46 AM
                 </div>
@@ -415,7 +431,7 @@
               <h3 class="font-serif text-3xl text-gold mb-1">Wedding Lunch</h3>
               <p class="text-gold-light font-garamond italic text-lg mb-4">Celebratory Feast</p>
               <div class="space-y-2 text-cream/90 font-sans text-sm">
-                <div class="flex items-center gap-2"><span class="text-gold">📅</span> Friday, April 3, 2026</div>
+                <div class="flex items-center gap-2"><span class="text-gold">✨</span> Friday, April 3, 2026</div>
                 <div class="flex items-center gap-2"><span class="text-gold">🕛</span> 12:00 PM onwards</div>
                 <div class="flex items-center gap-2"><span class="text-gold">📍</span> At the Venue</div>
               </div>
@@ -514,7 +530,7 @@
                 </div>
               </div>
               <div class="flex items-center gap-3">
-                <span class="text-gold">📅</span>
+                <span class="text-gold">✨</span>
                 <p>Friday, April 3, 2026 · Muhurtham: 7:46 AM</p>
               </div>
               <div class="flex items-center gap-3">
